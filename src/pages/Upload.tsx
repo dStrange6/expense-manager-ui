@@ -121,7 +121,7 @@ export default function Upload() {
             <div className="bg-[#252525] rounded-xl border border-[#333] overflow-hidden shadow-xl">
               <div className="px-4 py-3 bg-[#1c1c1c] border-b border-[#333] flex justify-between items-center">
                 <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Error Logs</h4>
-                <span className="text-[10px] text-gray-600 italic">Fix these rows and re-upload</span>
+                <span className="text-[10px] text-gray-600 italic">Failed rows — fix and re-upload these rows only</span>
               </div>
               <div className="max-h-[300px] overflow-y-auto">
                 <table className="w-full text-sm text-left">

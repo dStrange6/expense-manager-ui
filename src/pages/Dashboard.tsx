@@ -72,7 +72,7 @@ export default function Dashboard() {
                     style={{ width: `${(cat.totalAmount / maxCategorySpend) * 100}%` }}
                   ></div>
                 </div>
-                <div className="w-20 text-right pl-4 text-gray-200">₹{cat.totalAmount.toLocaleString()}</div>
+                <div className="w-28 text-right pl-4 text-gray-200">₹{cat.totalAmount.toLocaleString()}</div>
               </div>
             ))}
           </div>
@@ -91,7 +91,7 @@ export default function Dashboard() {
                     style={{ width: `${(vendor.totalAmount / maxVendorSpend) * 100}%` }}
                   ></div>
                 </div>
-                <div className="w-20 text-right pl-4 text-gray-200">₹{vendor.totalAmount.toLocaleString()}</div>
+                <div className="w-28 text-right pl-4 text-gray-200">₹{vendor.totalAmount.toLocaleString()}</div>
               </div>
             ))}
           </div>

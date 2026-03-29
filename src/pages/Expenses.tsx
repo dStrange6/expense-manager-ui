@@ -17,6 +17,7 @@ export default function Expenses() {
   const [vendor, setVendor] = useState('');
   const [description, setDescription] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [suggestedCategory, setSuggestedCategory] = useState<string | null>(null);
 
   const fetchExpenses = async () => {
     setLoading(true);
@@ -35,6 +36,21 @@ export default function Expenses() {
     fetchExpenses();
   }, [selectedMonth]);
 
+  const handleVendorBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const v = e.target.value.trim();
+    if (!v) { 
+      setSuggestedCategory(null); 
+      return; 
+    }
+    
+    try {
+      const res = await apiClient.get(`/expenses/suggest-category?vendor=${encodeURIComponent(v)}`);
+      setSuggestedCategory(res.data.categoryName);
+    } catch (error) {
+      setSuggestedCategory('Uncategorised'); // Fallback if API fails
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!date || !amount || !vendor) return;
@@ -50,7 +66,11 @@ export default function Expenses() {
     try {
       await apiClient.post('/expenses', newExpense);
       toast.success("Saved");
-      setDate(''); setAmount(''); setVendor(''); setDescription('');
+      setDate(''); 
+      setAmount(''); 
+      setVendor(''); 
+      setDescription('');
+      setSuggestedCategory(null); // Reset the prediction badge
       fetchExpenses(); 
     } catch (error) {
       toast.error("Save failed");
@@ -105,6 +125,7 @@ export default function Expenses() {
               placeholder="Swiggy" 
               value={vendor} 
               onChange={(e) => setVendor(e.target.value)} 
+              onBlur={handleVendorBlur} 
               className="w-full bg-[#1c1c1c] border border-[#333] rounded-lg px-3 py-2 text-white outline-none focus:border-gray-500" 
             />
           </div>
@@ -112,11 +133,19 @@ export default function Expenses() {
           <div>
             <label className="block text-sm text-gray-400 mb-1.5">Category (auto-assigned)</label>
             <div className="flex items-center gap-2">
-              <span className="px-3 py-1 bg-[#10b981]/10 text-[#10b981] rounded-full text-xs font-medium flex items-center gap-1.5 border border-[#10b981]/20">
-                <div className="w-1.5 h-1.5 bg-[#10b981] rounded-full"></div>
-                Auto
+              <span className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1.5 border transition-colors ${
+                !suggestedCategory || suggestedCategory === 'Uncategorised'
+                  ? 'bg-gray-500/10 text-gray-400 border-gray-500/20' 
+                  : 'bg-[#10b981]/10 text-[#10b981] border-[#10b981]/20'
+              }`}>
+                {suggestedCategory && suggestedCategory !== 'Uncategorised' && (
+                  <div className="w-1.5 h-1.5 bg-[#10b981] rounded-full"></div>
+                )}
+                {suggestedCategory || 'Auto'}
               </span>
-              <span className="text-[10px] text-gray-500 italic">detected on save</span>
+              <span className="text-[10px] text-gray-500 italic">
+                {!suggestedCategory ? 'detected on save' : 'matched via rules'}
+              </span>
             </div>
           </div>
           
