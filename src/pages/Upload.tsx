@@ -49,8 +49,6 @@ export default function Upload() {
       console.error("Upload failed", error);
       toast.error("Server error: Check file format or column lengths");
     } finally {
-      // THE LEARNING: Always clear the file and stop loading state, 
-      // regardless of whether the upload succeeded or failed.
       setFile(null);
       setUploading(false);
     }

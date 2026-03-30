@@ -2,11 +2,10 @@ import { NavLink, Outlet } from 'react-router-dom';
 
 export default function Layout() {
   return (
-    // The main dark background wrapper
     <div className="min-h-screen bg-[#1c1c1c] text-gray-200 p-8 font-sans">
       <div className="max-w-5xl mx-auto">
         
-        {/* Navigation Header */}
+        {}
         <nav className="flex space-x-8 border-b border-gray-700 pb-3 mb-8 text-sm font-medium">
           <NavLink 
             to="/" 
@@ -30,7 +29,7 @@ export default function Layout() {
           </NavLink>
         </nav>
 
-        {/* This Outlet is where the actual page content will be injected! */}
+        {}
         <main>
           <Outlet />
         </main>

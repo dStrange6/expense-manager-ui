@@ -9,13 +9,13 @@ export interface CategorySpend {
   }
   
   export interface Expense {
-    id: number;
+    id: string;
     expenseDate: string;
     amount: number;
     vendorName: string;
     description: string;
     categoryName: string;
-    anomaly: boolean;
+    isAnomaly: boolean;
   }
   
   export interface DashboardSummary {

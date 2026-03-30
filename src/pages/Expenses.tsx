@@ -189,6 +189,7 @@ export default function Expenses() {
           <div className="flex-1">Vendor / Description</div>
           <div className="w-32 shrink-0 text-center">Category</div>
           <div className="w-24 shrink-0 text-right">Amount</div>
+          <div className="w-20 shrink-0"></div> {/* NEW COLUMN FOR BADGE ALIGNMENT */}
         </div>
 
         {loading ? (
@@ -223,8 +224,19 @@ export default function Expenses() {
                 </div>
                 
                 {/* Amount (Right Aligned) */}
-                <div className="w-24 shrink-0 text-right font-semibold text-white tabular-nums">
-                  ₹{expense.amount.toLocaleString()}
+                <div className="w-24 shrink-0 text-right font-semibold tabular-nums">
+                  <span className={expense.isAnomaly ? 'text-red-400' : 'text-white'}>
+                    ₹{expense.amount.toLocaleString()}
+                  </span>
+                </div>
+                
+                {/* Anomaly Badge */}
+                <div className="w-20 shrink-0 flex items-center">
+                  {expense.isAnomaly && (
+                    <span className="ml-3 px-2 py-0.5 rounded text-[10px] font-bold bg-red-950/60 text-red-400 border border-red-800 shrink-0">
+                      anomaly
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
